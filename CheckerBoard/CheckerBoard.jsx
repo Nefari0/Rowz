@@ -3,7 +3,7 @@ import { CheckerTable,Rowz,OpacityLens } from './board.styles'
 import React, { Component } from 'react'
 import Tile from '../Tile/tile.component'
 import Piece from '../Tile/Piece/piece.component'
-import pieces from '../../pieces'
+import pieces from '../pieces'
 import CurrentPlayer from '../TurnIndicator/current.component'
 import { w3cwebsocket as W3CWebSocket } from "websocket";
 // const client = new W3CWebSocket(`ws://127.0.0.1:8003`); // production
@@ -97,14 +97,16 @@ class CheckerBoard extends Component {
     sendToSocketsSwitch = (input) => {
         // this.kingAll() // --- For testing
         const { currentPlayer,newPieces} = input
-        const { playOnline } = this.props
+        // const { playOnline } = this.props
+        const { currentGame } = this.props
+        const { id } = this.props// this is for playing a game with another user.
         this.setState({activeLocation:[null,null]})
-        if (playOnline === true) {
-            client.send(JSON.stringify({type: "checkerTurn",input}))
-        } else {
-            this.switchPlayer(currentPlayer)
-            this.setState({pieces:newPieces})
-        }
+        // if (playOnline === true) {
+            client.send(JSON.stringify({type: "checkerTurn",input,gameID:currentGame}))
+        // } else {
+        //     this.switchPlayer(currentPlayer)
+        //     this.setState({pieces:newPieces})
+        // }
     };
 
     boardFactory = () => {
