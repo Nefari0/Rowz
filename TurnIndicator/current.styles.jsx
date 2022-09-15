@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const TurnIndicator = styled.main`
     position: absolute;
-    top: 390px;
+    top: 430px;
     color: #555;
     z-index: 100000;
     height: 50px;
