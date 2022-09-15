@@ -57,7 +57,7 @@ class CheckerBoard extends Component {
         
             const dataFromServer = JSON.parse(message.data);
 
-            if (dataFromServer.type === 'checkerTurn' ) {
+            if (dataFromServer.type === 'checkerTurn' && dataFromServer.gameID === this.props.currentGame ) {
                 const { previousPiece,newPieces,currentPlayer,autoTurn } = dataFromServer.input
                 newPieces.forEach(el => el.pendingDeath = false)
                 this.setState({
