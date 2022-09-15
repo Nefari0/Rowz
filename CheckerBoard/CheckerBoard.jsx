@@ -1,5 +1,7 @@
-import { attackLogic,chainAttacksLogic } from './attack.logic'
-import { CheckerTable,Rowz,OpacityLens } from './board.styles'
+import { ErrorMsg } from '../Error/error.component'
+import { attackLogic } from './attack.logic'
+import { CheckerTable,Rowz } from './board.styles'
+import { Menu } from '../Menu/menu.component'
 import React, { Component } from 'react'
 import Tile from '../Tile/tile.component'
 import Piece from '../Tile/Piece/piece.component'
@@ -28,6 +30,7 @@ class CheckerBoard extends Component {
             tileIsSelected:1, // --- Changes opacity
             chainKillAvailable:false,
             moveOptions:null,
+            errorMessage:null,
         }
         this.selectTile = this.selectTile.bind(this)
         this.boardFactory = this.boardFactory.bind(this)
@@ -44,21 +47,24 @@ class CheckerBoard extends Component {
     };
 
     componentDidMount() {
-        this.setState({pieces:pieces})
         this.boardFactory()
         this.getConnected()
+        this.loadGame()
     };
-    
     getConnected = () => {
         client.onopen = () => {
             console.log('client connected')
         }
         client.onmessage = (message) => {
-        
+            const { currentGame } = this.props
             const dataFromServer = JSON.parse(message.data);
+            const { gameID,input,type } = dataFromServer
 
-            if (dataFromServer.type === 'checkerTurn' && dataFromServer.gameID === this.props.currentGame ) {
-                const { previousPiece,newPieces,currentPlayer,autoTurn } = dataFromServer.input
+            if (type === 'checkerTurn' && gameID === currentGame ) {
+                // --- Save game on browsers --- //
+                this.saveGame(message.data)
+                // ----------------------- //
+                const { previousPiece,newPieces,currentPlayer,autoTurn } = input
                 newPieces.forEach(el => el.pendingDeath = false)
                 this.setState({
                     pieces:newPieces,
@@ -72,8 +78,6 @@ class CheckerBoard extends Component {
                     const { x,y } = previousPiece
                     this.setState({
                         activeLocation:[x,y,previousPiece],
-                        // chainKillAvailable:false,
-                        // previousPiece:null
                     })
                 } else {
                     if (!autoTurn) {this.mandatoryAttack()}
@@ -94,19 +98,39 @@ class CheckerBoard extends Component {
         
     };
 
+    saveGame = (items) => {
+            localStorage.setItem('savedGame',items)
+    }
+
+    loadGame = () => {
+        const pieces = localStorage.getItem('savedGame')
+        try {if (pieces != undefined) {
+            const data = JSON.parse(pieces)
+            const { gameID,input,type} = data
+            const { currentPlayer,previousPiece,newPieces } = input
+            this.switchPlayer(currentPlayer)
+            this.setState({
+                pieces:data.input.newPieces,
+                previousPiece:previousPiece,
+            })
+        }} catch (err) {this.newGame()}
+    }
+
+    newGame = () => {
+        this.setState({pieces:pieces})
+        this.saveGame('')
+    }
+
     sendToSocketsSwitch = (input) => {
-        // this.kingAll() // --- For testing
-        const { currentPlayer,newPieces} = input
-        // const { playOnline } = this.props
         const { currentGame } = this.props
-        const { id } = this.props// this is for playing a game with another user.
         this.setState({activeLocation:[null,null]})
-        // if (playOnline === true) {
-            client.send(JSON.stringify({type: "checkerTurn",input,gameID:currentGame}))
-        // } else {
-        //     this.switchPlayer(currentPlayer)
-        //     this.setState({pieces:newPieces})
-        // }
+        var gameObject = {
+            type:"checkerTurn",
+            input,
+            gameID:currentGame
+        }
+        var gameObject = JSON.stringify(gameObject)
+        client.send(gameObject)
     };
 
     boardFactory = () => {
@@ -378,7 +402,8 @@ class CheckerBoard extends Component {
             tileIsSelected,
             moveOptions,
             chainKillAvailable,
-            previousPiece
+            previousPiece,
+            errorMessage
         } = this.state
 
         const mappedMatrix = matrix.map((row,id) => {
@@ -415,6 +440,10 @@ class CheckerBoard extends Component {
         return(
             <div>
                 <CheckerTable>
+                    <Menu
+                        newGame={this.newGame}
+                    />
+                    {errorMessage && <ErrorMsg />}
                     <Rowz>
                         {mappedPieces}
                         {mappedMatrix}
