@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { colors } from '../../rowz.plugin.'
+import { colors } from '../../rowz.plugin'
 const { wheat } = colors
 
 export const CheckerMenu = styled.header`

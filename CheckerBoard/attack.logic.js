@@ -9,7 +9,7 @@ export const attackLogic = async (enemyX,enemyY,currentPiece,state,checkPieceLoc
 
     // -- LOWER LEFT ATTACK -- //
     if(currentX-1 === enemyX && currentY+1 === enemyY){
-        console.log('lower left')
+        // console.log('lower left')
         // -- non-kings can only attack one direction on the y-axis -- //
         if(player === 'bad' && isKing === false){return}
 
@@ -30,7 +30,7 @@ export const attackLogic = async (enemyX,enemyY,currentPiece,state,checkPieceLoc
 
     // -- UPPER LEFT ATTACK -- //
     } else if (currentX-1 === enemyX && currentY-1 === enemyY) {
-        console.log('upper left')
+        // console.log('upper left')
         // -- non-kings can only attack one direction on the y-axis -- //
         if(player === 'good' && isKing === false){return}
 
@@ -51,7 +51,7 @@ export const attackLogic = async (enemyX,enemyY,currentPiece,state,checkPieceLoc
 
     // -- UPPER RIGHT ATTACK -- /
     } else if (currentX+1 === enemyX && currentY === enemyY+1) {
-        console.log('upper right')
+        // console.log('upper right')
 
         // -- non-kings can only attack one direction on the y-axis -- //
         if(player === 'good' && isKing === false){return}
@@ -73,7 +73,7 @@ export const attackLogic = async (enemyX,enemyY,currentPiece,state,checkPieceLoc
 
     // -- LOWER RIGHT ATTACK -- //
     } else if (currentX+1 === enemyX && currentY+1 === enemyY) {
-        console.log('lower right')
+        // console.log('lower right')
         // -- non-kings can only attack one direction on the y-axis -- //
         if(player === 'bad' && isKing === false){return}
         
