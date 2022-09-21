@@ -27,7 +27,6 @@ class CheckerBoard extends Component {
             pieces:[],
             matrix:[],
             currentPlayer:'bad',
-            tileIsSelected:1, // --- Changes opacity
             chainKillAvailable:false,
             moveOptions:null,
             errorMessage:null,
@@ -122,6 +121,7 @@ class CheckerBoard extends Component {
     }
 
     sendToSocketsSwitch = (input) => {
+        // this.kingAll()
         const { currentGame } = this.props
         this.setState({activeLocation:[null,null]})
         var gameObject = {
@@ -239,8 +239,9 @@ class CheckerBoard extends Component {
         })
     }
 
-    setMoves = async (x,y,id,activeLocation,manualControl,currentPlayer,pieces,isKing,currentPiece) => { // gets all move options based on active location
-        const { matrix } = this.state
+    setMoves = async (x,y,currentPiece) => { // gets all move options based on active location
+        const { matrix,pieces,currentPlayer } = this.state
+        const { isKing,id } = currentPiece[0]
         var pieceIndex = pieces.findIndex((el) => el.id === id)
         this.setState({
             chainKillAvailable:false,
@@ -290,42 +291,50 @@ class CheckerBoard extends Component {
                     } else {return}
             }
         }
-        if(manualControl === true){return await this.executeMovePiece(x,y,activeLocation[1],id,currentPlayer,isKing)} else {return}
+        return await this.executeMovePiece(x,y,id,currentPlayer,isKing)
     }
 
     // --- makes actual movements --- //
-    executeMovePiece = (x,y,landingY,id,currentPlayer,isKing) => {
-        const { pieces,matrix } = this.state
+    executeMovePiece = (x,y,id,currentPlayer,isKing) => {
+        const { pieces,matrix,activeLocation } = this.state
+        const landingY = activeLocation[1]
         var updatePieces = [...pieces]
         var pieceIndex = pieces.findIndex((el) => el.id === id)
 
-        // --- non-kings can only move one direction --- //
-        if (landingY > y && currentPlayer === 'good'){
-            if(!isKing){
-                return console.log('this move is not allowed')
-            } 
-        }
-        if (landingY < y && currentPlayer === 'bad'){
-            if(!isKing){
-                return console.log('this move is not allowed')
-            } 
-        }
-        updatePieces[pieceIndex].x = x
-        updatePieces[pieceIndex].y = y
+        // --- Is location on the board? --- //
+        if (x >= 0 && x <= matrix.length-1) {
+            if (y >= 0 && 7 <= matrix.length-1) {
+                
+                // --- non-kings can only move one direction --- //
+                if (landingY > y && currentPlayer === 'good'){
+                    if(!isKing){
+                        return console.log('this move is not allowed')
+                    } 
+                }
+                if (landingY < y && currentPlayer === 'bad'){
+                    if(!isKing){
+                        return console.log('this move is not allowed')
+                    } 
+                }
+                updatePieces[pieceIndex].x = x
+                updatePieces[pieceIndex].y = y
+                
+                // --- becomes king --- //
+                if(updatePieces[pieceIndex].player === 'bad' && updatePieces[pieceIndex].y === 0 ){
+                    updatePieces[pieceIndex].isKing = true
+                } else if (updatePieces[pieceIndex].player === 'good' && updatePieces[pieceIndex].y === matrix.length-1) {
+                    updatePieces[pieceIndex].isKing = true
+                } 
         
-        // --- becomes king --- //
-        if(updatePieces[pieceIndex].player === 'bad' && updatePieces[pieceIndex].y === 0 ){
-            updatePieces[pieceIndex].isKing = true
-        } else if (updatePieces[pieceIndex].player === 'good' && updatePieces[pieceIndex].y === matrix.length-1) {
-            updatePieces[pieceIndex].isKing = true
-        } 
-
-        var sendInfo = {
-            newPieces:updatePieces,
-            currentPlayer:this.state.currentPlayer,
-            previousPiece:updatePieces[pieceIndex],
+                var sendInfo = {
+                    newPieces:updatePieces,
+                    currentPlayer:this.state.currentPlayer,
+                    previousPiece:updatePieces[pieceIndex],
+                }
+                this.sendToSocketsSwitch(sendInfo)
+            }
         }
-        this.sendToSocketsSwitch(sendInfo)
+
     }
 
     // --- attacks and removes piece from play --- //
@@ -377,13 +386,11 @@ class CheckerBoard extends Component {
         const newActiveLocation = [x,y,piece]
         if(piece[0] != undefined) {
             this.handleInput('activeLocation',newActiveLocation)
-            this.handleInput('tileIsSelected',.4)
         }
         return
     }
     
     unselectTile = () => {
-        this.handleInput('tileIsSelected',1)
         this.handleInput('activeLocation',[null,null])
     }
 
