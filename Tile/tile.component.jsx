@@ -44,28 +44,29 @@ const Tile = (props) => {
             color={color}
         >
 
-        <div className={`tile-color ${!activeLocation[1] ? 'hide-opac' : 'display-opac' } ${color -1 ? true : 'tile-color-dark'} `} onClick={() => props.selectTile(x,y,currentPiece)} ></div>
+            <div className={`tile-color ${!activeLocation[1] ? 'hide-opac' : 'display-opac' } ${color -1 ? true : 'tile-color-dark'} `} onClick={() => props.selectTile(x,y,currentPiece)} ></div>
+            
+            {activeLocation[0] === x && activeLocation[1] === y ? 
+            <Controller
+                getCurrent={getCurrent}
+                setMoves={setMoves}
+                x={x}
+                y={y}
+                currentPiece={currentPiece}
+                currentPlayer={currentPlayer}
+                pieces={pieces}
+                activeLocation={activeLocation}
+                unselectTile={props.unselectTile}
+                chainKillAvailable={chainKillAvailable}
+                moveOptions={moveOptions}
+                previousPiece={previousPiece}
+            />
+            :
+            null
+            }
         
-        {activeLocation[0] === x && activeLocation[1] === y ? 
-        <Controller
-            getCurrent={getCurrent}
-            setMoves={setMoves}
-            x={x}
-            y={y}
-            currentPiece={currentPiece}
-            currentPlayer={currentPlayer}
-            pieces={pieces}
-            activeLocation={activeLocation}
-            unselectTile={props.unselectTile}
-            chainKillAvailable={chainKillAvailable}
-            moveOptions={moveOptions}
-            previousPiece={previousPiece}
-        />
-        :
-        null
-        }
-        
-    </TilePlate>)
+        </TilePlate>
+    )
 }
 
 export default Tile
