@@ -1,5 +1,4 @@
 import { CloseButton } from "../Piece/SVG"
-import { useState } from "react"
 import {
     ControlBox,
     LowRight,
@@ -27,7 +26,6 @@ export const Controller = (props) => {
 
     const selectionConstraint = (coords) => {
         if (activeLocation[2] != undefined && previousPiece != null) {
-            console.log('NOT UNDEFINED!',coords[1],y-1)
             if (currentPiece[0].id === previousPiece.id && moveOptions[0] != undefined) {
                 if (coords[0] === x+1 && coords[1] === y-1) {
                     console.log('true',)
@@ -39,7 +37,6 @@ export const Controller = (props) => {
                 } else if (coords[0] === x-1 && coords[1] === y-1) {
                     return 'top_left'
                 }
-                // x-1,y-1
             }
         }
     }
@@ -49,7 +46,7 @@ export const Controller = (props) => {
     const actuator = (x,y) => {
         const id = getCurrent('id')
         const isKing = getCurrent('isKing')
-        setMoves(x,y,id,activeLocation,true,currentPlayer,pieces,isKing,currentPiece)
+        setMoves(x,y,currentPiece)
     }
 
     return (
