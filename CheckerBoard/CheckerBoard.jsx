@@ -103,10 +103,10 @@ class CheckerBoard extends Component {
 
     loadGame = () => {
         const pieces = localStorage.getItem('savedGame')
-        try {if (pieces != undefined) {
+        try {if (pieces !== undefined) {
             const data = JSON.parse(pieces)
-            const { gameID,input,type} = data
-            const { currentPlayer,previousPiece,newPieces } = input
+            const { input } = data
+            const { currentPlayer,previousPiece } = input
             this.switchPlayer(currentPlayer)
             this.setState({
                 pieces:data.input.newPieces,
@@ -129,7 +129,7 @@ class CheckerBoard extends Component {
             input,
             gameID:currentGame
         }
-        var gameObject = JSON.stringify(gameObject)
+        gameObject = JSON.stringify(gameObject)
         client.send(gameObject)
     };
 
@@ -173,7 +173,7 @@ class CheckerBoard extends Component {
         const { pieces,currentPlayer } = this.state
         pieces.forEach(el => el.pendingDeath = false)
         var currentPieces = pieces.filter((el) => el.player === currentPlayer)
-        var enemyPieces = pieces.filter((el) => el.player != currentPlayer)
+        var enemyPieces = pieces.filter((el) => el.player !== currentPlayer)
 
         await currentPieces.forEach(el => {
             enemyPieces.forEach(enemy => {
@@ -309,13 +309,13 @@ class CheckerBoard extends Component {
                 if (landingY > y && currentPlayer === 'good'){
                     if(!isKing){
                         return console.log('this move is not allowed')
-                    } 
-                }
+                    }
+                };
                 if (landingY < y && currentPlayer === 'bad'){
                     if(!isKing){
                         return console.log('this move is not allowed')
                     } 
-                }
+                };
                 updatePieces[pieceIndex].x = x
                 updatePieces[pieceIndex].y = y
                 
@@ -324,7 +324,7 @@ class CheckerBoard extends Component {
                     updatePieces[pieceIndex].isKing = true
                 } else if (updatePieces[pieceIndex].player === 'good' && updatePieces[pieceIndex].y === matrix.length-1) {
                     updatePieces[pieceIndex].isKing = true
-                } 
+                };
         
                 var sendInfo = {
                     newPieces:updatePieces,
@@ -367,9 +367,8 @@ class CheckerBoard extends Component {
                     return pieces[key]
                 }
             }
-        }
-        
-    }
+        }   
+    };
 
     switchPlayer = async (input) => {
         switch (input) {
@@ -378,26 +377,28 @@ class CheckerBoard extends Component {
                 break;
             case 'bad':
                 this.setState({currentPlayer:'good'})
-        }
-        return
-    }
+                break;
+            default:
+                return
+        };
+    };
 
     selectTile = (x,y,piece) => {
         const newActiveLocation = [x,y,piece]
-        if(piece[0] != undefined) {
+        if(piece[0] !== undefined) {
             this.handleInput('activeLocation',newActiveLocation)
         }
         return
-    }
+    };
     
     unselectTile = () => {
         this.handleInput('activeLocation',[null,null])
-    }
+    };
 
     handleInput = (prop,val) => {
         this.setState({[prop]:val})
         return
-    }
+    };
 
     render() {
 
@@ -436,13 +437,13 @@ class CheckerBoard extends Component {
                 />
                 )
             })
-        })
+        });
 
         const mappedPieces = pieces.map(el => {
             return (
                 <Piece key={el.id} items={el} />
             )
-        })
+        });
 
         return(
             <div>
@@ -458,7 +459,7 @@ class CheckerBoard extends Component {
                 </CheckerTable>
                 <CurrentPlayer currentPlayer={currentPlayer} />
             </div>
-        )
+        );
     }
 }
 
