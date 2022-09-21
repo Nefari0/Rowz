@@ -12,12 +12,9 @@ export const Controller = (props) => {
 
     const {
         unselectTile,
-        getCurrent,
         setMoves,
         activeLocation,
-        currentPlayer,
         currentPiece,
-        pieces,
         x,y,
         chainKillAvailable,
         moveOptions,
@@ -25,10 +22,9 @@ export const Controller = (props) => {
     } = props
 
     const selectionConstraint = (coords) => {
-        if (activeLocation[2] != undefined && previousPiece != null) {
-            if (currentPiece[0].id === previousPiece.id && moveOptions[0] != undefined) {
+        if (activeLocation[2] !== undefined && previousPiece !== null) {
+            if (currentPiece[0].id === previousPiece.id && moveOptions[0] !== undefined) {
                 if (coords[0] === x+1 && coords[1] === y-1) {
-                    console.log('true',)
                     return 'top_right'
                 } else if (coords[0] === x+1 && coords[1] === y+1) {
                     return 'low_right'
@@ -39,19 +35,13 @@ export const Controller = (props) => {
                 }
             }
         }
-    }
-
-    // selectionConstraint()
+    };
 
     const actuator = (x,y) => {
-        const id = getCurrent('id')
-        const isKing = getCurrent('isKing')
         setMoves(x,y,currentPiece)
-    }
+    };
 
     return (
-        <>
-       
         <ControlBox>
             
             <CloseController onClick={() => unselectTile()}>
@@ -71,9 +61,7 @@ export const Controller = (props) => {
             <TopRight onClick={() => actuator(x+1,y-1)} />:null}
 
         </ControlBox>
- 
-        </>
     )
-}
+};
 
 export default Controller
