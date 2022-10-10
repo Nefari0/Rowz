@@ -6,7 +6,6 @@ export const CheckerTable = styled.main`
     width: 350px;
     margin-top: 70px;
     background-color: rgb(240, 240, 240);
-    background-image: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0)),url(white-backround1.jpg);
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
