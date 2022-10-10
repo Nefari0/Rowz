@@ -147,7 +147,7 @@ class CheckerBoard extends Component {
         const { pieces } = this.state
         pieces.forEach(el => {if (el.x === x && el.y === y) {el.pendingDeath = true}})
         this.setState({
-            piece:pieces,
+            pieces:pieces,
             moveOptions:[x,y]
         })
     }
