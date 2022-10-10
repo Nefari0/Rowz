@@ -1,15 +1,18 @@
 import { SadFace, SmileFace } from './SVG'
 import { GoodPlayer,BadPlayer } from './piece.styles'
+import { size } from '../../../rowz.plugin'
 import Crown from '../Crown/crown.component'
 import '../tile.styles.css'
+
+const { multiplier } = size
 
 const Piece = ({items}) => {    
 
     const {isKing,player,x,y,pendingDeath} = items
 
     const engine = {
-        left:`${7+(x*42)}px`,
-        top:`${3+(y*42)}px`,
+        left:`${7+(x*(43 * multiplier))}px`,
+        top:`${3+(y*(42 * multiplier))}px`,
         position:'absolute',
         transition: "all 1000ms",
     }

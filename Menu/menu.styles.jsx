@@ -1,12 +1,13 @@
 import styled from 'styled-components'
-import { colors } from '../../rowz.plugin'
+import { colors,size } from '../../rowz.plugin'
 const { baseColor } = colors
+const { multiplier } = size
 
 export const CheckerMenu = styled.header`
     position:absolute;
-    height: 50px;
-    width: 350px;
-    top:-50px;
+    height: ${50 * multiplier}px;
+    width: ${350 * multiplier}px;
+    top:${-50 * (multiplier)}px;
     display:flex;
     justify-content:center;
     z-index:10;

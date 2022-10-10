@@ -1,10 +1,15 @@
 import styled from "styled-components"
+import {size} from '../../rowz.plugin'
 
+const { multiplier } = size
+const dimensions = 350
+ 
 export const CheckerTable = styled.main`
     position: absolute;
-    height: 350px;
-    width: 350px;
-    margin-top: 70px;
+    height: ${dimensions*multiplier}px;
+    width: ${dimensions*multiplier}px;
+    // width: 350px;
+    margin-top: ${70 * multiplier}px;
     background-color: rgb(240, 240, 240);
     display: flex;
     flex-direction: row;

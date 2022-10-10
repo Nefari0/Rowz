@@ -1,13 +1,16 @@
 import styled from 'styled-components'
+import { size } from '../../rowz.plugin'
+
+const {multiplier } = size
 
 export const TurnIndicator = styled.main`
     position: absolute;
-    top: 430px;
+    top: ${430 * multiplier}px;
     color: #555;
     z-index: 100000;
-    height: 50px;
-    width: 180px;
-    margin-left: 20px;
+    height: ${50 * multiplier}px;
+    width: ${180 * multiplier}px;
+    margin-left: ${20 * multiplier}px;
     display: flex;
     align-items: center;
     background: rgba(165, 165, 165, 0.116);
@@ -16,7 +19,8 @@ export const TurnIndicator = styled.main`
     border-radius: 10px;
 `
 export const TurnIndicatorText = styled.i`
-    margin-left: 50px;
+    margin-left: ${50 * multiplier}px;
+    font-size:${15 * multiplier}px;
     font-weight: 800;
     font-family: 'Poppins', sans-serif;
     opacity: .6;
