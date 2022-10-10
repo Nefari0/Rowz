@@ -4,21 +4,22 @@ const { baseColor } = colors
 const { multiplier } = size
 
 export const CheckerMenu = styled.header`
-    ${openMenu}
     position:absolute;
     height: ${50 * multiplier}px;
     width: ${350 * multiplier}px;
     display:flex;
     justify-content:center;
     z-index:10;
-
+    
     button {
         margin:5px;
     }
+    
+    ${openMenu}
 `
 
 export const ConfirmNewGame = styled.div`
-    ${menuStyling}
+
 
     background-color:${baseColor};
     z-index:100000;
@@ -29,6 +30,8 @@ export const ConfirmNewGame = styled.div`
         z-index:1;
     }
 
+    ${menuStyling}
+    
     // position:absolute;
     // height:100px;
     // width:100px;

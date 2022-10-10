@@ -5,7 +5,6 @@ const {multiplier } = size
 
 export const TurnIndicator = styled.main`
     position: absolute;
-    ${playerStatusPlacement}
     color: #555;
     z-index: 100000;
     height: ${50 * multiplier}px;
@@ -17,6 +16,7 @@ export const TurnIndicator = styled.main`
     box-shadow: 5px 5px 20px -7px #000000;
     backdrop-filter: blur(12px);
     border-radius: 10px;
+    ${playerStatusPlacement}
 `
 export const TurnIndicatorText = styled.i`
     margin-left: ${50 * multiplier}px;
