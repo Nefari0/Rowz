@@ -10,6 +10,8 @@ const Piece = ({items}) => {
 
     const {isKing,player,x,y,pendingDeath} = items
 
+    console.log(pendingDeath)
+
     const engine = {
         left:`${5+(x*(43 * multiplier))}px`,
         top:`${10+(y*(42 * multiplier))}px`,
