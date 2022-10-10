@@ -1,5 +1,5 @@
 import './tile.styles.css'
-import { TilePlate } from './tile.styles'
+import { TilePlate,TileStyles } from './tile.styles'
 import Controller from './ControlPanel/controls.component'
 
 const Tile = (props) => {
@@ -44,7 +44,11 @@ const Tile = (props) => {
             color={color}
         >
 
-            <div className={`tile-color ${!activeLocation[1] ? 'hide-opac' : 'display-opac' } ${color -1 ? true : 'tile-color-dark'} `} onClick={() => props.selectTile(x,y,currentPiece)} ></div>
+            <TileStyles
+                onClick={() => props.selectTile(x,y,currentPiece)}
+                activeLocation={activeLocation}
+                color={color}
+            />
             
             {activeLocation[0] === x && activeLocation[1] === y ? 
             <Controller
