@@ -1,11 +1,11 @@
 import styled from 'styled-components'
-import { size } from '../../rowz.plugin'
+import { size,playerStatusPlacement } from '../../rowz.plugin'
 
 const {multiplier } = size
 
 export const TurnIndicator = styled.main`
     position: absolute;
-    top: ${430 * multiplier}px;
+    ${playerStatusPlacement}
     color: #555;
     z-index: 100000;
     height: ${50 * multiplier}px;
