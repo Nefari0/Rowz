@@ -20,7 +20,7 @@ export const CheckerMenu = styled.header`
 export const ConfirmNewGame = styled.div`
     ${menuStyling}
 
-    background-color:${colors.baseColor};
+    background-color:${baseColor};
     z-index:100000;
     border-radius:2px;
     box-shadow:10px 5px 60px 10px rgba(36, 36, 36, 1);

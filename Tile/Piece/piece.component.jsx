@@ -11,8 +11,8 @@ const Piece = ({items}) => {
     const {isKing,player,x,y,pendingDeath} = items
 
     const engine = {
-        left:`${7+(x*(43 * multiplier))}px`,
-        top:`${3+(y*(42 * multiplier))}px`,
+        left:`${5+(x*(43 * multiplier))}px`,
+        top:`${10+(y*(42 * multiplier))}px`,
         position:'absolute',
         transition: "all 1000ms",
     }

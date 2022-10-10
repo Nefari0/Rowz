@@ -10,6 +10,7 @@ export const TilePlate = styled.main`
     height: ${42 * multiplier}px;
     width: ${42 * multiplier}px;
     margin: none;
+    // margin-top:10px;
     
 `
 

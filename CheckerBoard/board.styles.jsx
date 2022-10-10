@@ -9,6 +9,7 @@ export const CheckerTable = styled.main`
     position: absolute;
     height: ${dimensions*multiplier}px;
     width: ${dimensions*multiplier}px;
+    padding-top:10px;
     background-color: rgb(240, 240, 240);
     display: flex;
     flex-direction: row;
