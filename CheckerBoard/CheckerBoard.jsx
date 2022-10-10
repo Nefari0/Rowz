@@ -60,6 +60,7 @@ class CheckerBoard extends Component {
             const { gameID,input,type } = dataFromServer
 
             if (type === 'checkerTurn' && gameID === currentGame ) {
+                console.log(currentGame)
                 // --- Save game on browsers --- //
                 this.saveGame(message.data)
                 // ----------------------- //
