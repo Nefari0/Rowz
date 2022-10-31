@@ -43,3 +43,4 @@
     color: white;
     margin: none;
 }
+/* // ${({activeLocation}) => (!activeLocation[1] ? hideOpac : displayOpac) } */

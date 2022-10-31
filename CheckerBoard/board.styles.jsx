@@ -1,12 +1,16 @@
 import styled from "styled-components"
+import {size,boardPlacement} from '../../rowz.plugin'
 
+const { multiplier } = size
+const dimensions = 350
+ 
 export const CheckerTable = styled.main`
+    ${boardPlacement}
     position: absolute;
-    height: 350px;
-    width: 350px;
-    margin-top: 70px;
+    height: ${dimensions*multiplier}px;
+    width: ${dimensions*multiplier}px;
+    padding-top:10px;
     background-color: rgb(240, 240, 240);
-    background-image: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0)),url(white-backround1.jpg);
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

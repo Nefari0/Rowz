@@ -1,9 +1,12 @@
 import styled, { css } from "styled-components";
+import { size } from "../../../rowz.plugin";
+
+const { multiplier } = size
 
 const Player = css`
     position: absolute;
-    height: 35px;
-    width: 35px;
+    height: ${35 * multiplier}px;
+    width: ${35 * multiplier}px;
     border-radius: 50%;
     background: linear-gradient(0turn,#555,rgb(143, 143, 143));
     box-shadow: 5px 5px 20px -7px #000000;
