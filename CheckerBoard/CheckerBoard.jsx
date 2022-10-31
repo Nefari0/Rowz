@@ -8,8 +8,10 @@ import Piece from '../Tile/Piece/piece.component'
 import pieces from '../pieces'
 import CurrentPlayer from '../TurnIndicator/current.component'
 import { w3cwebsocket as W3CWebSocket } from "websocket";
+import { socketString } from '../../../WS'
 // const client = new W3CWebSocket(`ws://127.0.0.1:8003`); // production
-const client = new W3CWebSocket(`ws://165.227.102.189:8000`); // build
+// const client = new W3CWebSocket(`ws://165.227.102.189:8000`); // build
+const client = new W3CWebSocket(socketString); // production
 
 const upLeft = [-1,-1]
 const upRight = [1,-1]
